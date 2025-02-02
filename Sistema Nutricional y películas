@@ -1,0 +1,108 @@
+import java.util.*;
+
+class Ingrediente {
+    String nombre;
+    double gramos;
+    double calorias;
+    double proteinas;
+    double grasas;
+    double carbohidratos;
+
+    public Ingrediente(String nombre, double gramos, double calorias, double proteinas, double grasas, double carbohidratos) {
+        this.nombre = nombre;
+        this.gramos = gramos;
+        this.calorias = calorias;
+        this.proteinas = proteinas;
+        this.grasas = grasas;
+        this.carbohidratos = carbohidratos;
+    }
+}
+
+class Pelicula {
+    String titulo;
+    int anio;
+    String genero;
+
+    public Pelicula(String titulo, int anio, String genero) {
+        this.titulo = titulo;
+        this.anio = anio;
+        this.genero = genero;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Sistema de cálculo de nutrientes
+        List<Ingrediente> ingredientes = new ArrayList<>();
+        System.out.println("Ingrese la cantidad de ingredientes:");
+        int n = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Ingrese el nombre del ingrediente:");
+            String nombre = scanner.nextLine();
+            System.out.println("Ingrese la cantidad en gramos:");
+            double gramos = scanner.nextDouble();
+            System.out.println("Ingrese las calorías por gramo:");
+            double calorias = scanner.nextDouble();
+            System.out.println("Ingrese la proteína por gramo:");
+            double proteinas = scanner.nextDouble();
+            System.out.println("Ingrese la grasa por gramo:");
+            double grasas = scanner.nextDouble();
+            System.out.println("Ingrese los carbohidratos por gramo:");
+            double carbohidratos = scanner.nextDouble();
+            scanner.nextLine();
+            
+            ingredientes.add(new Ingrediente(nombre, gramos, calorias * gramos, proteinas * gramos, grasas * gramos, carbohidratos * gramos));
+        }
+        
+        double totalCalorias = 0, totalProteinas = 0, totalGrasas = 0, totalCarbohidratos = 0;
+        for (Ingrediente ing : ingredientes) {
+            totalCalorias += ing.calorias;
+            totalProteinas += ing.proteinas;
+            totalGrasas += ing.grasas;
+            totalCarbohidratos += ing.carbohidratos;
+        }
+        
+        System.out.println("Resumen nutricional de la comida:");
+        System.out.println("Calorías: " + totalCalorias);
+        System.out.println("Proteínas: " + totalProteinas + "g");
+        System.out.println("Grasas: " + totalGrasas + "g");
+        System.out.println("Carbohidratos: " + totalCarbohidratos + "g");
+        
+        if (totalCalorias <= 2000 && totalProteinas >= 50 && totalGrasas <= 70 && totalCarbohidratos <= 300) {
+            System.out.println("El valor nutricional de la comida es aceptable.");
+        } else {
+            System.out.println("El valor nutricional de la comida no es aceptable.");
+        }
+
+        // Sistema de ordenamiento de películas
+        List<Pelicula> peliculas = new ArrayList<>();
+        System.out.println("Ingrese la cantidad de películas:");
+        int m = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 0; i < m; i++) {
+            System.out.println("Ingrese el título de la película:");
+            String titulo = scanner.nextLine();
+            System.out.println("Ingrese el año de lanzamiento:");
+            int anio = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Ingrese el género:");
+            String genero = scanner.nextLine();
+            
+            peliculas.add(new Pelicula(titulo, anio, genero));
+        }
+        
+        peliculas.sort(Comparator.comparingInt(p -> p.anio));
+        
+        System.out.println("Lista de películas ordenadas por año:");
+        for (Pelicula p : peliculas) {
+            System.out.println(p.anio + " - " + p.titulo + " (" + p.genero + ")");
+        }
+        
+        scanner.close();
+    }
+}
